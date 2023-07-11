@@ -22,3 +22,13 @@
   background: #fad0ec;
   border-color: #8b005d;
 }
+
+/* 공백없이 사용하면 해당 클래스가 모두 포함되어야지만 선택됨 */
+.form-control.invalid input {
+  border-color: red;
+  background: #ffd7d7;
+}
+
+.form-control.invalid label {
+  color: red;
+}
