@@ -1,46 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext } from 'react';
 
-import AuthContext from './store/auth-context';
 import Login from './components/Login/Login';
 import Home from './components/Home/Home';
 import MainHeader from './components/MainHeader/MainHeader';
+import AuthContext from './store/auth-context';
 
 function App() {
-  useEffect(() => {
-    const storedUserLoggedInInformation = localStorage.getItem('isLoggedIn');
-
-    if (storedUserLoggedInInformation === '1') {
-      setIsLoggedIn(true);
-    }
-  }, [])
-
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  const loginHandler = (email, password) => {
-    // 브라우저에 내장되 있는 함수. 
-    // a global object which is available in the browser
-    localStorage.setItem('isLoggedIn', '1'); // 1 : logged in 0: not logged in
-    setIsLoggedIn(true);
-  };
-
-  const logoutHandler = () => {
-    localStorage.removeItem('isLoggedIn');
-    setIsLoggedIn(false);
-  };
+  const ctx = useContext(AuthContext);
 
   return (
-    <AuthContext.Provider 
-      value={{
-        isLoggedIn: isLoggedIn
-      }}
-    >
-      {/* <MainHeader isAuthenticated={isLoggedIn} onLogout={logoutHandler} /> */}
-      <MainHeader onLogout={logoutHandler}/>
+    <React.Fragment>
+      <MainHeader />
       <main>
-        {!isLoggedIn && <Login onLogin={loginHandler} />}
-        {isLoggedIn && <Home onLogout={logoutHandler} />}
+        {!ctx.isLoggedIn && <Login />}
+        {ctx.isLoggedIn && <Home/>}
       </main>
-    </AuthContext.Provider>
+    </React.Fragment>
+      
   );
 }
 
