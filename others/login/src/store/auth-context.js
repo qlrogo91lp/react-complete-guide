@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 
 const AuthContext = React.createContext({
     isLoggedIn: false,
+    // IDE 자동완성에 나오게 하기위해 설정
     onLogout: () => {},
     onLogin: (email, password) => {}
 });
@@ -30,15 +31,16 @@ export const AuthContextProvider = (props) => {
     };
 
     return (
-    <AuthContext.Provider
-        value={{ 
-            isLoggedIn: isLoggedIn,
-            onLogout: logoutHandler,
-            onLogin: loginHandler,
-        }}
-    >
-        {props.children}
-    </AuthContext.Provider>);
+        <AuthContext.Provider
+            value={{ 
+                isLoggedIn: isLoggedIn,
+                onLogout: logoutHandler,
+                onLogin: loginHandler,
+            }}
+        >
+            {props.children}
+        </AuthContext.Provider>
+    );
 }
 
 export default AuthContext;

@@ -49,10 +49,6 @@ const Login = (props) => {
     const emailInputRef = useRef();
     const passwordInputRef = useRef();
 
-    // Destructuring (ES6)
-    const { isValid: emailIsValid } = emailState;
-    const { isValid: passwordIsValid } = passwordState;
-
     useEffect(() => {
         console.log("EFFECT RUNNING");
 
@@ -61,9 +57,15 @@ const Login = (props) => {
         };
     }, []);
 
+    // Destructuring (ES6)
+    // 전체 개체 대신 특정 속성을 종속성으로 전달하기 위해
+    // validity가 이미 true가 됐을때 다른 문자를 입력했을때 다시 체크하지 않음
+    const { isValid: emailIsValid } = emailState;
+    const { isValid: passwordIsValid } = passwordState;
+
     useEffect(() => {
         const identifier = setTimeout(() => {
-            console.log("CHecking form validity!");
+            console.log("Checking form validity!");
             // setFormIsValid(emailState.isValid && passwordState.isValid)
             setFormIsValid(emailIsValid && passwordIsValid);
         }, 500);
