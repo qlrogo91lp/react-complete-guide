@@ -1,10 +1,17 @@
-import { createStore } from 'redux';
+import { configureStore } from '@reduxjs/toolkit';
 
-// State 객체 초기화
-const initialState = { counter: 0, showCounter: true };
+import counterReducer from './counter';
+import authReducer from './auth';
 
+const store = configureStore({ 
+    reducer: { counter: counterReducer, auth: authReducer },  
+});
+
+export default store;
+
+/*
+// Toolkit 사용안한 버전
 const counterReducer = (state = initialState, action) => {
-    
     // 항상 새로운 State 객체를 생성해서 return 할 것
     if (action.type === 'increment') {
         return {
@@ -39,4 +46,4 @@ const counterReducer = (state = initialState, action) => {
 
 const store = createStore(counterReducer);
 
-export default store;
+*/
