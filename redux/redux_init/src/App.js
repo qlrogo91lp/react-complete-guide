@@ -16,7 +16,6 @@ function App() {
       {isAuth && <UserProfile />}
       <Counter />
     </Fragment>
-    
   );
 }
 
