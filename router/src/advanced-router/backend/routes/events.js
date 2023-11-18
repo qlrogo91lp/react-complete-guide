@@ -44,9 +44,9 @@ router.post('/', async (req, res, next) => {
     errors.date = 'Invalid date.';
   }
 
-  if (!isValidImageUrl(data.image)) {
-    errors.image = 'Invalid image.';
-  }
+  // if (!isValidImageUrl(data.image)) {
+  //   errors.image = 'Invalid image.';
+  // }
 
   if (Object.keys(errors).length > 0) {
     return res.status(422).json({

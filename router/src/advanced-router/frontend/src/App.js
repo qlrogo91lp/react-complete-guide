@@ -1,4 +1,18 @@
-// Challenge / Exercise
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+
+import RootLayout from "./pages/Root";
+import EventsPage, { loader as eventsLoader } from "./pages/Events";
+import EditEventPage from "./pages/EditEvent";
+import NewEventPage from "./pages/NewEvent";
+import HomePage from "./pages/Home";
+import EventDetailPage, {
+    loader as eventDetailLoader,
+    action as deleteEventAction,
+} from "./pages/EventDetail";
+import EventsRootLayout from "./pages/EventsRoot";
+import ErrorPage from "./pages/Error";
+import { action as manipulateEventAction } from './components/EventForm';
+import NewsletterPage, { action as newsletterAction} from './pages/Newsletter';
 
 // 1. Add five new (dummy) page components (content can be simple <h1> elements)
 //    - HomePage
@@ -21,7 +35,57 @@
 // BONUS: Add another (nested) layout route that adds the <EventNavigation> component above all /events... page components
 
 function App() {
-  return <div></div>;
+    const router = createBrowserRouter([
+        {
+            path: "/",
+            element: <RootLayout />,
+            errorElement: <ErrorPage />,
+            children: [
+                { index: true, element: <HomePage /> },
+                {
+                    path: "events",
+                    element: <EventsRootLayout />,
+                    children: [
+                        {
+                            index: true,
+                            element: <EventsPage />,
+                            loader: eventsLoader,
+                        },
+                        {
+                            path: ":eventId",
+                            // useRouterLoaderData를 사용하기 위해서
+                            id: "event-detail",
+                            // element X : 공유하는 Component를 사용하지 않음
+                            loader: eventDetailLoader,
+                            children: [
+                                {
+                                    index: true,
+                                    element: <EventDetailPage />,
+                                    action: deleteEventAction,
+                                },
+                                {
+                                    path: "edit",
+                                    element: <EditEventPage />,
+                                    action: manipulateEventAction,
+                                },
+                            ],
+                        },
+                        {
+                            path: "new",
+                            element: <NewEventPage />,
+                            action: manipulateEventAction,
+                        },
+                    ],
+                },
+                {
+                  path: 'newsletter',
+                  element: <NewsletterPage />,
+                  action: newsletterAction,
+                },
+            ],
+        },
+    ]);
+    return <RouterProvider router={router} />;
 }
 
 export default App;
