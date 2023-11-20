@@ -15,7 +15,7 @@ function MainNavigation() {
               }
               end
             >
-              Home
+              HomeHome
             </NavLink>
           </li>
           <li>
